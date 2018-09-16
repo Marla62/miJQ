@@ -2849,58 +2849,7 @@
 
 
 
-//  //第si个轮播
-//  let banner14 = document.querySelectorAll(".banner4");
-//  //获取的要轮播的内容
 
-//  //    初始状态
-//  boxs14[0] = boxs14[0].style.left=0;
-//  dots14[0] = dots14[0].classList.add("active2");
-//  let next14=0;
-//  let now14 =0;
-//  //    向左移动
-//  function moveL14() {
-//      next14--;
-//      if (next14 == -1){
-//          next14= 0;
-//          return;
-//      }
-//      console.log(next14);
-//      boxs14[next14].style.left= -296 +"px";
-//      animate(boxs14[now14],{left:296});
-//      animate(boxs14[next14],{left:0});
-//
-//
-//      dots14[next14].classList.add("active2");
-//      dots14[now14].classList.remove("active2");
-//
-//      now14 = next14;
-//  }
-//
-//  //    向右移动
-//  function moveR14() {
-//      next14++;
-//      if (next14 == dots14.length){
-//          next14=2;
-//      }
-//      console.log(next14);
-//      boxs14[next14].style.left=296;
-//      animate(boxs14[now14],{left:-296});
-//      animate(boxs14[next14],{left:0});
-//      dots14[now14].classList.remove("active2");
-//      dots14[next14].classList.add("active2");
-//
-//
-//      now14 = next14;
-//  }
-//  leftBtn14.onclick =function(){
-//      moveL14();
-//  };
-//  rightBtn14.onclick =function(){
-//      moveR14();
-//  };
-//
-//
 //  //    点击轮播点
 //  for (let i=0;i<dots14.length;i++){
 //      dots14[i].onclick = function () {
@@ -2923,58 +2872,40 @@
 //
 
  //左右平移效果
- let leftBtn2 = document.querySelector(".recommend .top .left");
- let rightBtn2 = document.querySelector(".recommend .top .right");
- let uls = document.querySelector(".recommend .bottom ul");
+ let leftBtn2 = $(".recommend .top .left");
+ let rightBtn2 = $(".recommend .top .right");
+ let uls = $(".recommend .bottom ul");
  // let widths = parseInt(getComputedStyle(uls,null).width)/3;
  let widths = 1226;
  let times =0;
-     leftBtn2.style.color="#e0e0e0";
-     rightBtn2.style.color="#b0b0b0";
-	 rightBtn2.onclick = function () {
-		times++;
-		if (times == 3) {
-		    times =2;
-		}
-
-        if (times == 1) {
-            leftBtn2.style.color="#b0b0b0";
-            rightBtn2.style.color="#b0b0b0";
-        }
-        if (times == 2) {
-            leftBtn2.style.color="#b0b0b0";
-            rightBtn2.style.color="#e0e0e0";
-        }
-        uls.style.transform = `translate(${-widths*times}px)`;
-
-    };
-     leftBtn2.onclick =function () {
-		times--;
-		if (times== -1){
-		    times=0;
-		}
-
-     if (times == 0) {
-         leftBtn2.style.color="#e0e0e0";
-         rightBtn2.style.color="#b0b0b0";
-     }
-     if (times == 1) {
-         leftBtn2.style.color="#b0b0b0";
-         rightBtn2.style.color="#b0b0b0";
-     }
-     if (times == 2) {
-         leftBtn2.style.color="#b0b0b0";
-         rightBtn2.style.color="#e0e0e0";
-     }
-		uls.style.transform = `translate(${-widths*times}px)`;
-    };
-
-
-
-
-
-
-
+     leftBtn2[0].style.color="#e0e0e0";
+     rightBtn2[0].style.color="#b0b0b0";
+    rightBtn2.click(function () {
+       times++;
+       if (times>=2){
+           times=2;
+           leftBtn2[0].style.color="#b0b0b0";
+           rightBtn2[0].style.color="#e0e0e0";
+       }
+       if (times >0 && times<2) {
+           leftBtn2[0].style.color="#b0b0b0";
+           rightBtn2[0].style.color="#b0b0b0";
+       }
+       uls.css("transform",`translate(${(-widths*times)}px)`);
+    });
+     leftBtn2.click(function () {
+            times--;
+            if (times <=0){
+                times=0;
+                leftBtn2[0].style.color="#e0e0e0";
+                rightBtn2[0].style.color="#b0b0b0";
+            }
+         if (times >0 && times<2) {
+             leftBtn2[0].style.color="#b0b0b0";
+             rightBtn2[0].style.color="#b0b0b0";
+         }
+         uls.css("transform",transform = `translate(${-widths*times}px)`);
+     });
 //    页面滚动到一定位置 ，显示返回顶部
  let backBtn = document.querySelector(".back");
  backBtn.style.opacity=0;
@@ -2995,36 +2926,46 @@
      animate(document.body,{scrollTop:0})
  };
 
+//     鼠标移入A 显示下拉菜单
+    //menu
+    let ulbox = $(".site-header .nav .menu a ul");
+    //a
+    let as = $(".site-header .nav .menu a");
+    //
+    let menus = $(".site-header .nav .menu");
+    as.mouseenter(function () {
+        $(this).children("ul").css("height",270).siblings().css('height',0);
+    });
+    as.mouseleave(function () {
+        $(this).children("ul").css("height",0)
+    })
+
+    let spans = document.querySelectorAll(".goods1 .box-bd .jsq .flashtime .box");
+    daojishi();
+    setInterval(daojishi,1000);
+    function daojishi(){
+        let arr=[];
+        let now = new Date();
+        let hap = new Date(2018,9,1);
+        //算时间差, 距离国庆日期 还有 all 毫秒/1000
+        let all =(hap.getTime()-now.getTime())/1000;
+        //获取小时
+        let  h =Math.floor(all%(24*60*60)/(60*60))-2;
+        arr.push(h);
+        //获取分钟
+        let m = Math.floor(all%(60*60)/(60));
+        arr.push(m);
+        //获取秒
+        let s = Math.floor(all%60);
+        arr.push(s);
+
+        spans.forEach((e,i)=>{
+            e.innerHTML= arr[i];
+        })
+    }
 
 
 
-// 智能模块的切换
-
-
-
-//    鼠标移入显示下拉菜单
-    let ulbox = document.querySelectorAll(".site-header .nav .menu a ul");
-    let as = document.querySelectorAll(".site-header .nav .menu a");
-    let menus = document.querySelectorAll(".site-header .nav .menu");
- for (let i = 0; i < as.length; i++) {
-        as[i].onmouseenter = function () {
-            for (let j = 0;j<as.length;j++){
-                ulbox[j].style.height=0;
-            }
-            ulbox[i].style.borderTop=" 1px solid #000;";
-            ulbox[i].style.height=230+"px";
-            if (ulbox[i].style.height == 230+"px"){
-                ulbox[i].style.boxShadow=" 0 3px 2px rgba(0,0,0,0.4)";
-            }
-        };
-        for (let i = 0; i < as.length; i++){
-            menus[0].onmouseleave = function () {
-                for (let j = 0;j<as.length;j++){
-                    ulbox[j].style.height=0;
-                }
-                ulbox[i].style.height=0;
-                ulbox[i].style.borderTop=" 0px solid #000;";
-            }}}
 
 
 
